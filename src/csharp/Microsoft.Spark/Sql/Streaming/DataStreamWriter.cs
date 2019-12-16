@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Spark.Interop.Ipc;
 
@@ -167,6 +168,36 @@ namespace Microsoft.Spark.Sql.Streaming
                 return new StreamingQuery((JvmObjectReference)_jvmObject.Invoke("start", path));
             }
             return new StreamingQuery((JvmObjectReference)_jvmObject.Invoke("start"));
+        }
+
+        public DataStreamWriter Foreach(Action<Row> writer)
+        {
+            return this;
+        }
+
+        public DataStreamWriter Foreach(ForeachWriter writer)
+        {
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the output of the streaming query to be processed using the provided function.
+        /// This is supported only the in the micro-batch execution modes(that is, when the trigger
+        /// is not continuous). In every micro-batch, the provided function will be called in every
+        /// micro-batch with:
+        ///     (i) the output rows as a Dataset and
+        ///     (ii) the batch identifier.
+        ///
+        /// The batchId can be used deduplicate and transactionally write the output (that is, the
+        /// provided Dataset) to external systems.The output Dataset is guaranteed to exactly same
+        /// for the same batchId(assuming all operations are deterministic in the query).
+        /// </summary>
+        /// <param name="function"></param>
+        /// <returns></returns>
+        public DataStreamWriter ForeachBatch(Action<DataFrame, long> function)
+        {
+            var wrappedFunction = ForeachBatchFunction(_jvmObject);
+            return this;
         }
 
         /// <summary>
