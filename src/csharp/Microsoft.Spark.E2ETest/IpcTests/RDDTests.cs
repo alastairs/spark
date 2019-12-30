@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -34,7 +35,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
         [Fact]
         public void TestTextFile()
         {
-            RDD<string> rdd = _sc.TextFile($"{TestEnvironment.ResourceDirectory}people.txt");
+            RDD<string> rdd = _sc.TextFile(Path.Combine(TestEnvironment.ResourceDirectory, "people.txt"));
             var strs = new[] { "Michael, 29", "Andy, 30", "Justin, 19" };
             Assert.Equal(strs, rdd.Collect());
 

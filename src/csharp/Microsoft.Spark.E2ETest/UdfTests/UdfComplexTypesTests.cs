@@ -25,7 +25,7 @@ namespace Microsoft.Spark.E2ETest.UdfTests
             _spark = fixture.Spark;
             _df = _spark
                 .Read()
-                .Json(Path.Combine($"{TestEnvironment.ResourceDirectory}people.json"));
+                .Json(Path.Combine(TestEnvironment.ResourceDirectory, "people.json"));
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Spark.E2ETest.UdfTests
 
             Row[] rows = _df.Select(workingUdf(_df["ids"])).Collect().ToArray();
             Assert.Equal(3, rows.Length);
-            
+
             var expected = new[] { "1", "3,5", "2,4" };
             string[] rowsToArray = rows.Select(x => x[0].ToString()).ToArray();
             Assert.Equal(expected, rowsToArray);

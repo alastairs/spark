@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.IO;
 using Microsoft.Spark.E2ETest.Utils;
 using Xunit;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
 
             sc.ClearJobGroup();
 
-            string filePath = $"{TestEnvironment.ResourceDirectory}people.txt";
+            string filePath = Path.Combine(TestEnvironment.ResourceDirectory, "people.txt");
             sc.AddFile(filePath);
             sc.AddFile(filePath, true);
 

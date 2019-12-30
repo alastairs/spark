@@ -209,7 +209,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
 
             DataFrame df = _spark
                 .Read()
-                .Json($"{TestEnvironment.ResourceDirectory}people.json");
+                .Json(Path.Combine(TestEnvironment.ResourceDirectory, "people.json"));
 
             Assert.IsType<DataFrame>(Broadcast(df));
 

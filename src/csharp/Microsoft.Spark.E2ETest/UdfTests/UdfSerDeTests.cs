@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.IO;
 using System.Linq;
 using Microsoft.Spark.E2ETest.ExternalLibrary;
 using Microsoft.Spark.Sql;
@@ -23,7 +24,7 @@ namespace Microsoft.Spark.E2ETest.UdfTests
             _df = _spark
                 .Read()
                 .Schema("age INT, name STRING")
-                .Json($"{TestEnvironment.ResourceDirectory}people.json");
+                .Json(Path.Combine(TestEnvironment.ResourceDirectory, "people.json"));
         }
 
         [Fact]

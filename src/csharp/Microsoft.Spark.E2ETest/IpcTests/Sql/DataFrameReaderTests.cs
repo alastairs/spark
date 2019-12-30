@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Spark.Sql;
 using Microsoft.Spark.Sql.Types;
 using Xunit;
@@ -51,7 +52,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
                         { "option2", "value2" }
                     }));
 
-            string jsonFile = $"{TestEnvironment.ResourceDirectory}people.json";
+            string jsonFile = Path.Combine(TestEnvironment.ResourceDirectory, "people.json");
             Assert.IsType<DataFrame>(dfr.Load());
             Assert.IsType<DataFrame>(dfr.Load(jsonFile));
             Assert.IsType<DataFrame>(dfr.Load(jsonFile, jsonFile));
@@ -59,20 +60,20 @@ namespace Microsoft.Spark.E2ETest.IpcTests
             Assert.IsType<DataFrame>(dfr.Json(jsonFile));
             Assert.IsType<DataFrame>(dfr.Json(jsonFile, jsonFile));
 
-            string csvFile = $"{TestEnvironment.ResourceDirectory}people.csv";
+            string csvFile = Path.Combine(TestEnvironment.ResourceDirectory, "people.csv");
             Assert.IsType<DataFrame>(dfr.Csv(csvFile));
             Assert.IsType<DataFrame>(dfr.Csv(csvFile, csvFile));
 
-            string parquetFile = $"{TestEnvironment.ResourceDirectory}users.parquet";
+            string parquetFile = Path.Combine(TestEnvironment.ResourceDirectory, "users.parquet");
             Assert.IsType<DataFrame>(dfr.Parquet(parquetFile));
             Assert.IsType<DataFrame>(dfr.Parquet(parquetFile, parquetFile));
 
-            string orcFile = $"{TestEnvironment.ResourceDirectory}users.orc";
+            string orcFile = Path.Combine(TestEnvironment.ResourceDirectory, "users.orc");
             Assert.IsType<DataFrame>(dfr.Orc(orcFile));
             Assert.IsType<DataFrame>(dfr.Orc(orcFile, orcFile));
 
             dfr = _spark.Read();
-            string textFile = $"{TestEnvironment.ResourceDirectory}people.txt";
+            string textFile = Path.Combine(TestEnvironment.ResourceDirectory, "people.txt");
             Assert.IsType<DataFrame>(dfr.Text(textFile));
             Assert.IsType<DataFrame>(dfr.Text(textFile, textFile));
         }

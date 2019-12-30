@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.IO;
 using System.Linq;
 using Apache.Arrow;
 using Microsoft.Spark.E2ETest.Utils;
@@ -28,7 +29,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
             _df = _spark
                 .Read()
                 .Schema("age INT, name STRING")
-                .Json($"{TestEnvironment.ResourceDirectory}people.json");
+                .Json(Path.Combine(TestEnvironment.ResourceDirectory, "people.json"));
         }
 
         [Fact]
@@ -225,7 +226,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
             DataFrame df = _spark
                 .Read()
                 .Schema("age INT, name STRING")
-                .Json($"{TestEnvironment.ResourceDirectory}more_people.json");
+                .Json(Path.Combine(TestEnvironment.ResourceDirectory, "more_people.json"));
             // Data:
             // { "name":"Michael"}
             // { "name":"Andy", "age":30}
@@ -405,7 +406,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
             Assert.IsType<RelationalGroupedDataset>(_df.GroupBy(_df["age"], _df["name"]));
 
             {
-                RelationalGroupedDataset df = 
+                RelationalGroupedDataset df =
                     _df.WithColumn("tempAge", _df["age"]).GroupBy("name");
 
                 Assert.IsType<DataFrame>(df.Mean("age"));

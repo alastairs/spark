@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Spark.E2ETest.Utils;
 using Microsoft.Spark.Sql;
 using Xunit;
@@ -29,7 +30,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
                 DataFrameWriter dfw = _spark
                     .Read()
                     .Schema("age INT, name STRING")
-                    .Json($"{TestEnvironment.ResourceDirectory}people.json")
+                    .Json(Path.Combine(TestEnvironment.ResourceDirectory, "people.json"))
                     .Write();
 
                 Assert.IsType<DataFrameWriter>(dfw.Mode(SaveMode.Ignore));
@@ -64,7 +65,7 @@ namespace Microsoft.Spark.E2ETest.IpcTests
             {
                 DataFrameWriter dfw = _spark
                     .Read()
-                    .Csv($"{TestEnvironment.ResourceDirectory}people.csv")
+                    .Csv(Path.Combine(TestEnvironment.ResourceDirectory, "people.csv"))
                     .Write();
 
                 // TODO: Test dfw.Jdbc without running a local db.
