@@ -18,7 +18,10 @@ namespace Microsoft.Spark.Extensions.Delta.E2ETest
                 SparkFixture.EnvironmentVariableNames.ExtraSparkSubmitArgs,
                 "--packages io.delta:delta-core_2.11:0.6.0 " +
                 "--conf spark.databricks.delta.snapshotPartitions=2 " +
-                "--conf spark.sql.sources.parallelPartitionDiscovery.parallelism=5");
+                "--conf spark.sql.shuffle.partitions=5" +
+                "--conf delta.log.cacheSize=3" +
+                "--conf spark.sql.sources.parallelPartitionDiscovery.parallelism=5" +
+                "--conf spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension");
             SparkFixture = new SparkFixture();
         }
     }
