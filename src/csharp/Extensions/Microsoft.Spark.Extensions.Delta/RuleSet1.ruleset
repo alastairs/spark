@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="New Rule Set" Description=" " ToolsVersion="10.0">
+   <Rules AnalyzerId="Microsoft.Spark.Extensions.Delta.DeltaLakeVersionAnalyzer" RuleNamespace="Microsoft.Rules.Managed">
+     <Rule Id="CA1021" Action="Warning" />
+   </Rules>
+</RuleSet>
