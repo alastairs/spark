@@ -233,6 +233,144 @@ namespace Microsoft.Spark.Extensions.Delta.Tables
                 "isDeltaTable",
                 identifier);
 
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to create a Delta table,
+        /// error if the table exists (the same as SQL `CREATE TABLE`).
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        ///
+        /// Note: This uses the active SparkSession in the current thread to read the table data. Hence,
+        /// this throws error if active SparkSession has not been set, that is,
+        /// <c>SparkSession.getActiveSession()</c> is empty.
+        /// </summary>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder Create() =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "create");
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to create a Delta table,
+        /// error if the table exists (the same as SQL `CREATE TABLE`).
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        /// </summary>
+        /// <param name="spark">SparkSession passed by the user.</param>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder Create(SparkSession spark) =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "create", spark);
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to create a Delta table,
+        /// if it does not exists (the same as SQL <c>CREATE TABLE IF NOT EXISTS</c>).
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        /// 
+        /// Note: This uses the active SparkSession in the current thread to read the table data. Hence,
+        /// this throws error if active SparkSession has not been set, that is,
+        /// <c>SparkSession.getActiveSession()</c> is empty.
+        /// </summary>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder CreateIfNotExists() =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "createIfNotExists");
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to create a Delta table,
+        /// if it does not exists (the same as SQL <c>CREATE TABLE IF NOT EXISTS</c>).
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        /// </summary>
+        /// <param name="spark"></param>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder CreateIfNotExists(SparkSession spark) =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "createIfNotExists", spark);
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to replace a Delta table,
+        /// error if the table doesn't exist (the same as SQL <c>REPLACE TABLE</c>)
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        ///
+        /// Note: This uses the active SparkSession in the current thread to read the table data. Hence,
+        /// this throws error if active SparkSession has not been set, that is,
+        /// <c>SparkSession.getActiveSession()</c> is empty.
+        /// </summary>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder Replace() =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "replace");
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to replace a Delta table,
+        /// error if the table doesn't exist (the same as SQL <c>REPLACE TABLE</c>)
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        /// </summary>
+        /// <param name="spark"></param>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder Replace(SparkSession spark) =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "replace", spark);
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to replace a Delta table,
+        /// or create table if not exists (the same as SQL <c>CREATE OR REPLACE TABLE</c>)
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        ///
+        /// Note: This uses the active SparkSession in the current thread to read the table data. Hence,
+        /// this throws error if active SparkSession has not been set, that is,
+        /// <c>SparkSession.getActiveSession()</c> is empty.
+        /// </summary>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder CreateOrReplace() =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "createOrReplace");
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaTableBuilder"/> to replace a Delta table,
+        /// or create table if not exists (the same as SQL <c>CREATE OR REPLACE TABLE</c>)
+        /// Refer to <see cref="DeltaTableBuilder"/> for more details.
+        /// </summary>
+        /// <param name="spark"></param>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaTableBuilder CreateOrReplace(SparkSession spark) =>
+            (DeltaTableBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "createOrReplace", spark);
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaColumnBuilder"/> to specify a column.
+        /// Refer to <see cref="DeltaTableBuilder"/> for examples and <see cref="DeltaColumnBuilder"/>
+        /// detailed APIs.
+        ///
+        /// Note: This uses the active SparkSession in the current thread to read the table data. Hence,
+        /// this throws error if active SparkSession has not been set, that is,
+        /// <c>SparkSession.getActiveSession()</c> is empty.
+        /// </summary>
+        /// <param name="colName">The column name.</param>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaColumnBuilder ColumnBuilder(string colName) =>
+            (DeltaColumnBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "columnBuilder", colName);
+
+        /// <summary>
+        /// Return an instance of <see cref="DeltaColumnBuilder"/> to specify a column.
+        /// Refer to <see cref="DeltaTableBuilder"/> for examples and <see cref="DeltaColumnBuilder"/>
+        /// detailed APIs.
+        /// </summary>
+        /// <param name="colName">The column name.</param>
+        /// <param name="spark">SparkSession passed by the user.</param>
+        /// <returns></returns>
+        [DeltaLakeSince(DeltaLakeVersions.V1_0_0)]
+        public static DeltaColumnBuilder ColumnBuilder(SparkSession spark, string colName) =>
+            (DeltaColumnBuilder)SparkEnvironment.JvmBridge.CallStaticJavaMethod(
+                s_deltaTableClassName, "columnBuilder", spark, colName);
+
         /// <summary>
         /// Apply an alias to the DeltaTable. This is similar to <c>Dataset.As(alias)</c> or SQL
         /// <c>tableName AS alias</c>.

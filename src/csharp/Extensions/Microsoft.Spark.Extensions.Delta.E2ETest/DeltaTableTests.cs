@@ -350,6 +350,20 @@ namespace Microsoft.Spark.Extensions.Delta.E2ETest
         }
 
         /// <summary>
+        /// Test that Delta Lake 1.0+ methods return the expected signature.
+        /// </summary>
+        [SkipIfSparkVersionIsLessThan(Versions.V3_1_0)]
+        public void TestSignaturesV3_1_X()
+        {
+            DeltaColumnBuilder columnBuilder =
+                Assert.IsType<DeltaColumnBuilder>(DeltaTable.ColumnBuilder("colName"));
+            columnBuilder = columnBuilder.DataType("string");
+            columnBuilder = columnBuilder.DataType(new StringType());
+            columnBuilder = columnBuilder.Nullable(true);
+            columnBuilder.Build();
+        }
+
+        /// <summary>
         /// Validate that a range DataFrame contains only the expected values.
         /// </summary>
         /// <param name="expectedValues"></param>

@@ -19,7 +19,7 @@ namespace Microsoft.Spark.Extensions.Delta.E2ETest
             string deltaVersion = sparkVersion.Major switch
             {
                 2 => "delta-core_2.11:0.6.1",
-                3 => "delta-core_2.12:0.8.0",
+                3 => "delta-core_2.12:1.0.0",
                 _ => throw new NotSupportedException($"Spark {sparkVersion} not supported.")
             };
 
